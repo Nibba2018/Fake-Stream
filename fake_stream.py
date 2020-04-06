@@ -16,9 +16,9 @@ for webcam in webcams:
     print(webcam[-1])
 
 print("Incase you see red a Warning, kindly rerun with a different webcam ID...\n")
-print("Press q to quit or ctrl + c \n")
-webcamID = input("Choose a webcam ID:")
+print("Press ctrl + c to quit\n")
+webcamID = int(input("Choose a webcam ID:"))
 
 print('Initiating fake stream...')
 os.system(f'./script.sh {video_file} {webcams[webcamID]}')
-input("Press Enter to exit...")
+input("\nPress Enter to exit...")
