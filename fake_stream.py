@@ -1,25 +1,24 @@
-import time
-import pyfakewebcam as fw
-import cv2
+import os
 
-if __name__ == "__main__":
+video_file = input("Enter Video Path:")
 
-    filename = input("Enter Video File path:")
-    # Enter webcam ID accordingly:
-    print("Initiating Webcam...")
-    fake_cam = fw.FakeWebcam('/dev/video1', 640, 480)
+permission = os.system("chmod +x script.sh")
+if permission:
+    print("Permission not granted")
 
-    try:
-        while True:
-            cap = cv2.VideoCapture(filename)
-            print("Playing Video...")
-            while cap.isOpened():
+print("Enter password for creating fake Webcam instance")
+os.system('sudo modprobe v4l2loopback')
 
-                ret, frame = cap.read()
+webcams = os.popen('ls /dev/video*').read().split()
 
-                if ret:
-                    fake_cam.schedule_frame(frame)
-                    time.sleep(1/30.0)
+print("Webcam IDs Available:")
+for webcam in webcams:
+    print(webcam[-1])
 
-    except KeyboardInterrupt:
-        print("Exiting....")
+print("Incase you see red a Warning, kindly rerun with a different webcam ID...\n")
+print("Press q to quit or ctrl + c \n")
+webcamID = input("Choose a webcam ID:")
+
+print('Initiating fake stream...')
+os.system(f'./script.sh {video_file} {webcams[webcamID]}')
+input("Press Enter to exit...")
