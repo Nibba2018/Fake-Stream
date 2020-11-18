@@ -18,6 +18,7 @@ Allows infinite streaming of a video as webcam output for different applications
   * Press `q` twice in quick succession to stop streaming.
 * Testing:
   * `ffplay /dev/video<WebcamID you chose>`
+  * [Webcam Tests](https://webcamtests.com/) can also be used.
 *  Open Zoom or Skype and select a different video source.
 
 Cheers!!
