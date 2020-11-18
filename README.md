@@ -1,6 +1,8 @@
 # Fake-Stream
 Allows infinite streaming of a video as webcam output for different applications like Zoom, Skype etc.
 
+**Winter of Code 2020:** [Project Ideas](https://github.com/dsc-iem/WoC-Project-Ideas#fake-stream)
+
 ## Setting up
 * Dependencies:
   * v4l2loopback-utils/v4l2loopback-dkms
