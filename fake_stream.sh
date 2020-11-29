@@ -15,6 +15,6 @@ while [ true ]; do
       sudo modprobe -r v4l2loopback
       exit ;
    else
-	   ffmpeg -re -i $1 -map 0:v -f v4l2 $WEBCAM
+      ffmpeg -re -i $1 -map 0:v -f v4l2 $WEBCAM
    fi
 done

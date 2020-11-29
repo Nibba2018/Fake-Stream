@@ -12,7 +12,7 @@ Allows infinite streaming of a video as webcam output for different applications
     * `sudo apt-get install v4l2loopback-utils ffmpeg`
   * Manjaro/Arch based distros
     * `sudo pacman -S v4l2loopback-dkms ffmpeg linux-headers`
-    * For linux headers, choose the one which corresponds to your linux kernel version. For e.g choose `linu58-headers` for kernel 5.8.* . Run `uname -a` to determine your kernel version.
+    * For linux headers, choose the one which corresponds to your linux kernel version. For e.g choose `linux58-headers` for kernel 5.8.* . Run `uname -a` to determine your kernel version.
 * Running script:
   * `fake_stream.sh <path to video>`
   * Press `q` twice in quick succession to stop streaming.
