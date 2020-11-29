@@ -40,4 +40,4 @@ $ git commit -m "Your detailed description of your changes."
 $ git push -u origin name-of-your-bugfix-or-feature
 ```
 
-7. Submit a Pull Request on Github to the `master-dev` branch.
+7. Submit a Pull Request on Github to the `master` branch.
