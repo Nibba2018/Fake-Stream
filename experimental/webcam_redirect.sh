@@ -1,0 +1,1 @@
+ffmpeg -f video4linux2 -input_format yuyv422 -i /dev/video0 -codec copy -f video4linux2 /dev/video2
