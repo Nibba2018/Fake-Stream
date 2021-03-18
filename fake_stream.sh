@@ -1,13 +1,55 @@
 #!/bin/bash
 
+# function to start fake stream
+startstream()
+{
+      echo -e "${GREEN}${BOLD}[+] Playing $VIDEO On The Stream Pointed By $WEBCAM"
+      ffmpeg -stream_loop -1 -re -i /tmp/video -vcodec rawvideo -pix_fmt yuv420p -threads 0 -f v4l2 $WEBCAM
+}
+
+clear
+
+#Specify Color Schemes
+NONE='\033[00m'
+RED='\033[01;31m'
+GREEN='\033[01;32m'
+YELLOW='\033[01;33m'
+PURPLE='\033[01;35m'
+CYAN='\033[01;36m'
+WHITE='\033[01;37m'
+BOLD='\033[1m'
+BLINK='\033[5m'
+UNDERLINE='\033[4m'
+
+#Just Some Cool ASCII ART
+echo -e """ ${GREEN}${BOLD}
+  █████▒▄▄▄       ██ ▄█▀▓█████      ██████ ▄▄▄█████▓ ██▀███  ▓█████ ▄▄▄       ███▄ ▄███▓
+▓██   ▒▒████▄     ██▄█▒ ▓█   ▀    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▓█   ▀▒████▄    ▓██▒▀█▀ ██▒
+▒████ ░▒██  ▀█▄  ▓███▄░ ▒███      ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒███  ▒██  ▀█▄  ▓██    ▓██░
+░▓█▒  ░░██▄▄▄▄██ ▓██ █▄ ▒▓█  ▄      ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒▓█  ▄░██▄▄▄▄██ ▒██    ▒██ 
+░▒█░    ▓█   ▓██▒▒██▒ █▄░▒████▒   ▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░▒████▒▓█   ▓██▒▒██▒   ░██▒
+ ▒ ░    ▒▒   ▓▒█░▒ ▒▒ ▓▒░░ ▒░ ░   ▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░░ ▒░ ░▒▒   ▓▒█░░ ▒░   ░  ░
+ ░       ▒   ▒▒ ░░ ░▒ ▒░ ░ ░  ░   ░ ░▒  ░ ░    ░      ░▒ ░ ▒░ ░ ░  ░ ▒   ▒▒ ░░  ░      ░
+ ░ ░     ░   ▒   ░ ░░ ░    ░      ░  ░  ░    ░        ░░   ░    ░    ░   ▒   ░      ░   
+             ░  ░░  ░      ░  ░         ░              ░        ░  ░     ░  ░       ░   
+${NONE}"""                                                                                      
+
+# Probing Kernel Modules
 if ! sudo modprobe v4l2loopback exclusive_caps=1; then
-   echo "Unable to probe kernel module."
+   echo -e "${RED}[-] Unable to probe kernel module.${NONE}"
    exit ;
 fi
 
-WEBCAMS=$(ls /dev/video*)
-echo $WEBCAMS
-read -p "Choose Webcam ID (last digit):" ID
+
+VIDEO="$@"
+cp "$@" /tmp/video
+
+echo -e "${CYAN}[+] Available Video Devices : "
+
+WEBCAMS=$(ls -1 /dev/video*)
+echo -e "${PURPLE}$WEBCAMS${NONE}"
+
+read -p "[+] Choose Webcam ID (last digit) : " ID
 WEBCAM=$(grep $ID <<< $WEBCAMS)
 
 while [ true ]; do
@@ -17,7 +59,6 @@ while [ true ]; do
       sudo modprobe -r v4l2loopback
       exit ;
    else
-      echo -e "Playing $1 On The Stream Pointed By $WEBCAM"
-      ffmpeg -stream_loop -1 -re -i $1 -vcodec rawvideo -pix_fmt yuv420p -threads 0 -f v4l2 $WEBCAM 2>./log.txt
+		startstream
    fi
 done
