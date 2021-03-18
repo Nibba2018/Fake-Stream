@@ -17,6 +17,7 @@ while [ true ]; do
       sudo modprobe -r v4l2loopback
       exit ;
    else
-      ffmpeg -stream_loop -1 -re -i $1 -vcodec rawvideo -pix_fmt yuv420p -threads 0 -f v4l2 -vf hflip -c:a copy $WEBCAM
+      echo -e "Playing $1 On The Stream Pointed By $WEBCAM"
+      ffmpeg -stream_loop -1 -re -i $1 -vcodec rawvideo -pix_fmt yuv420p -threads 0 -f v4l2 $WEBCAM 2>./log.txt
    fi
 done
