@@ -1,16 +1,5 @@
 #!/bin/bash
 
-# function to start fake stream
-startstream()
-{
-      echo -e "${GREEN}${BOLD}[+] Playing $VIDEO On The Stream Pointed By $WEBCAM"
-      ffmpeg -stream_loop -1 -re -i /tmp/video -vcodec rawvideo -pix_fmt yuv420p -threads 0 -f v4l2 $WEBCAM
-}
-
-# Initial Cleanup
-clear
-rm -f /tmp/video
-
 #Specify Color Schemes
 NONE='\033[00m'
 RED='\033[01;31m'
@@ -23,18 +12,48 @@ BOLD='\033[1m'
 BLINK='\033[5m'
 UNDERLINE='\033[4m'
 
-#Just Some Cool ASCII ART
-echo -e """ ${GREEN}${BOLD}
-  █████▒▄▄▄       ██ ▄█▀▓█████      ██████ ▄▄▄█████▓ ██▀███  ▓█████ ▄▄▄       ███▄ ▄███▓
-▓██   ▒▒████▄     ██▄█▒ ▓█   ▀    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▓█   ▀▒████▄    ▓██▒▀█▀ ██▒
-▒████ ░▒██  ▀█▄  ▓███▄░ ▒███      ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒███  ▒██  ▀█▄  ▓██    ▓██░
-░▓█▒  ░░██▄▄▄▄██ ▓██ █▄ ▒▓█  ▄      ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒▓█  ▄░██▄▄▄▄██ ▒██    ▒██ 
-░▒█░    ▓█   ▓██▒▒██▒ █▄░▒████▒   ▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░▒████▒▓█   ▓██▒▒██▒   ░██▒
- ▒ ░    ▒▒   ▓▒█░▒ ▒▒ ▓▒░░ ▒░ ░   ▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░░ ▒░ ░▒▒   ▓▒█░░ ▒░   ░  ░
- ░       ▒   ▒▒ ░░ ░▒ ▒░ ░ ░  ░   ░ ░▒  ░ ░    ░      ░▒ ░ ▒░ ░ ░  ░ ▒   ▒▒ ░░  ░      ░
- ░ ░     ░   ▒   ░ ░░ ░    ░      ░  ░  ░    ░        ░░   ░    ░    ░   ▒   ░      ░   
-             ░  ░░  ░      ░  ░         ░              ░        ░  ░     ░  ░       ░   
-${NONE}"""                                                                                      
+# function to start fake stream
+startstream()
+{
+      echo -e "${GREEN}${BOLD}[+] Playing $VIDEO On The Stream Pointed By $WEBCAM"
+      ffmpeg -stream_loop -1 -re -i /tmp/video -vcodec rawvideo -pix_fmt yuv420p -threads 0 -f v4l2 $WEBCAM
+}
+
+banner()
+{
+
+	#Just Some Cool ASCII ART
+	echo -e """ ${GREEN}${BOLD}
+	  █████▒▄▄▄       ██ ▄█▀▓█████      ██████ ▄▄▄█████▓ ██▀███  ▓█████ ▄▄▄       ███▄ ▄███▓
+	▓██   ▒▒████▄     ██▄█▒ ▓█   ▀    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▓█   ▀▒████▄    ▓██▒▀█▀ ██▒
+	▒████ ░▒██  ▀█▄  ▓███▄░ ▒███      ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒███  ▒██  ▀█▄  ▓██    ▓██░
+	░▓█▒  ░░██▄▄▄▄██ ▓██ █▄ ▒▓█  ▄      ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒▓█  ▄░██▄▄▄▄██ ▒██    ▒██ 
+	░▒█░    ▓█   ▓██▒▒██▒ █▄░▒████▒   ▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░▒████▒▓█   ▓██▒▒██▒   ░██▒
+	 ▒ ░    ▒▒   ▓▒█░▒ ▒▒ ▓▒░░ ▒░ ░   ▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░░ ▒░ ░▒▒   ▓▒█░░ ▒░   ░  ░
+	 ░       ▒   ▒▒ ░░ ░▒ ▒░ ░ ░  ░   ░ ░▒  ░ ░    ░      ░▒ ░ ▒░ ░ ░  ░ ▒   ▒▒ ░░  ░      ░
+	 ░ ░     ░   ▒   ░ ░░ ░    ░      ░  ░  ░    ░        ░░   ░    ░    ░   ▒   ░      ░   
+	             ░  ░░  ░      ░  ░         ░              ░        ░  ░     ░  ░       ░   
+	${NONE}"""                                                                                      
+
+}
+
+
+cleanup()
+{
+	clear
+	#Display Banner
+	banner
+	rm -f /tmp/video	
+	if [[ $# -eq 0 ]] ; then
+	    echo -e "${RED}${BOLD}No argument supplied${NONE}"
+	    exit 1;
+	fi
+
+}
+
+# Initial Cleanup
+cleanup $@
+
 
 # Probing Kernel Modules
 if ! sudo modprobe v4l2loopback exclusive_caps=1; then
@@ -42,9 +61,8 @@ if ! sudo modprobe v4l2loopback exclusive_caps=1; then
    exit ;
 fi
 
-
 VIDEO="$@"
-ln -s "$@" /tmp/video
+ln -s $VIDEO /tmp/video
 
 echo -e "${CYAN}[+] Available Video Devices : "
 
