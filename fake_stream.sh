@@ -7,7 +7,9 @@ startstream()
       ffmpeg -stream_loop -1 -re -i /tmp/video -vcodec rawvideo -pix_fmt yuv420p -threads 0 -f v4l2 $WEBCAM
 }
 
+# Initial Cleanup
 clear
+rm -f /tmp/video
 
 #Specify Color Schemes
 NONE='\033[00m'
@@ -42,7 +44,7 @@ fi
 
 
 VIDEO="$@"
-cp "$@" /tmp/video
+ln -s "$@" /tmp/video
 
 echo -e "${CYAN}[+] Available Video Devices : "
 
