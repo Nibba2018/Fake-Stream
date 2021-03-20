@@ -43,7 +43,7 @@ cleanup()
 	clear
 	#Display Banner
 	banner
-	rm -f /tmp/video	
+	rm -f /tmp/video 2>/dev/null
 	if [[ $# -eq 0 ]] ; then
 	    echo -e "${RED}${BOLD}No argument supplied${NONE}"
 	    exit 1;
@@ -56,13 +56,16 @@ cleanup $@
 
 
 # Probing Kernel Modules
-if ! sudo modprobe v4l2loopback exclusive_caps=1; then
+if ! sudo modprobe v4l2loopback card_label="My Fake Webcam" exclusive_caps=1; then
    echo -e "${RED}[-] Unable to probe kernel module.${NONE}"
    exit ;
 fi
 
 VIDEO="$@"
-ln -s $VIDEO /tmp/video
+PWD=$(pwd)/$VIDEO
+echo $PWD
+ln -s $PWD /tmp/video
+
 
 echo -e "${CYAN}[+] Available Video Devices : "
 
@@ -76,7 +79,7 @@ while [ true ]; do
    read -t 1 -n 1
    if [ $? = 0 ] ; then
       # cleanup
-      sudo modprobe -r v4l2loopback
+      sudo modprobe --remove v4l2loopback
       exit ;
    else
 		startstream
