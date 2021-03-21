@@ -27,7 +27,7 @@ FILENAME: Path to Video/Image
 streamvideo()
 {
       echo -e "${GREEN}${BOLD}[+] Playing $VIDEO On The Stream Pointed By $WEBCAM"
-      ffmpeg -stream_loop -1 -re -i /tmp/video -vcodec rawvideo -pix_fmt yuv420p -threads 0 -f v4l2 $WEBCAM
+      ffmpeg -stream_loop -1 -re -i /tmp/video -vcodec rawvideo -threads 0 -f v4l2 $WEBCAM
 }
 
 streamdesktop()
@@ -88,7 +88,6 @@ WEBCAM=$(grep $ID <<< $WEBCAMS)
 
 VIDEO="$@"
 PWD=$(pwd)/$VIDEO
-echo $PWD
 ln -s $PWD /tmp/video
 
 while [ true ]; do
