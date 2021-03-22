@@ -1,4 +1,4 @@
-if ! sudo modprobe v4l2loopback exclusive_caps=1; then
+if ! sudo modprobe v4l2loopback exclusive_caps=1 card_label="HP webcam"; then
    echo "Unable to probe kernel module."
    exit ;
 fi
