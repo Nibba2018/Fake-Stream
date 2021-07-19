@@ -84,7 +84,7 @@ exit
 
 streamvideo()
 {
-	ffmpeg -stream_loop -1 -re -i $VIDEO -vcodec rawvideo -threads 0 -f v4l2 $VIDEO_STREAM
+	ffmpeg -stream_loop -1 -re -i "$VIDEO" -vcodec rawvideo -threads 0 -f v4l2 $VIDEO_STREAM
 	# ffmpeg : The program which would enable us to stream our video as the webcam feed
 	# -stream_loop -1 : This dictates how many times the video should be looped. Assigning it the negative value of -1 makes it loop infinitely so that it keeps on playing till we close our program.
 	# -re : This specifies the program to read input at native frame rate
@@ -118,11 +118,11 @@ parse_args()
 	POSITIONAL=()
 	while [[ $# -gt 0 ]]; do
 	  key="$1"
-
+		
 	  case $key in
 	    -v|--video)
 	      vid="$2"
-		  VIDEO=$(readlink -f $vid)
+		  VIDEO=$(printf %q "$2")
 	      shift # past argument
 	      shift # past value
 	      ;;
@@ -204,7 +204,6 @@ exitgracefully()
 		echo -e "[$RED-$NONE] Your Video Stream Might Freeze As The Module Was Still In Use When Removed "
 		echo -e "[$YELLOW~$NONE] Restarting Your Video Should Fix It!"
 	fi
-	rm -f /tmp/video
 	echo -e "[$GREEN+$NONE] Clean Up Done!"
 }
 
@@ -225,7 +224,7 @@ availablestreams()
 	VIDEO_STREAM=$(whiptail --notags --title "Video Devices" --menu "Available Devices" $(( $L + 3 )) $(( $W + 7 )) $size ${choice[@]} 3>&1 1>&2 2>&3)
 }
 
-parse_args $@
+parse_args "$@"
 init
 availablestreams
 echo -e "[$GREEN+$NONE] Using Device:$PURPLE $VIDEO_STREAM $NONE"
