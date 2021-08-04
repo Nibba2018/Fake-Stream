@@ -33,7 +33,7 @@ center()
 	local glyph="${2:-=}"                 # glyph to compose the border
 	local padding="${3:-2}"               # spacing around the text
 
-	local text_width=${#text}             
+	local text_width=${#text}
 
 	local border_width=$(( (terminal_width - (padding * 2) - text_width) / 2 ))
 
@@ -75,7 +75,7 @@ help()
 	echo -e """[$CYAN>$NONE] Usage: $GREEN./fake_stream.sh $NONE[OPTIONS]
 
 OPTIONS :
--h, --help            Show This Menu 
+-h, --help            Show This Menu
 -s, --source          Stream Desktop
 -v, --video$CYAN FILENAME$NONE  Path to Video/Image
 """
@@ -118,7 +118,7 @@ parse_args()
 	POSITIONAL=()
 	while [[ $# -gt 0 ]]; do
 	  key="$1"
-		
+
 	  case $key in
 	    -v|--video)
 	      vid="$2"
@@ -146,7 +146,7 @@ parse_args()
 	then
 		help
 	fi
-	
+
 	if [[ -n "$VIDEO" ]] && [[ -n "$SOURCE_FLAG" ]]
 	then
 		echo -e "[$RED-$NONE] Both Flags Cannot Be Used Together!"
@@ -157,8 +157,8 @@ parse_args()
 init()
 {
 	#Show Banner
-	center "Starting Fake Stream"	
-	
+	center "Starting Fake Stream"
+
 	#Check if program is being run as root
 	if [[ $EUID -ne 0 ]]; then
 		echo -e "[$RED-$NONE] This script must be run as ${RED}ROOT${NONE}!" 1>&2
@@ -213,13 +213,13 @@ availablestreams()
 	declare -a streams=($(ls /dev/video*))
 	declare -a choice
 	declare -i size=${#streams[@]}
-	
+
 	#Create array for whiptail
 	for stream in ${streams[@]}
 	do
 	choice=(${choice[@]} $stream $stream)
 	done
-	
+
 	#Show Menu
 	VIDEO_STREAM=$(whiptail --notags --title "Video Devices" --menu "Available Devices" $(( $L + 3 )) $(( $W + 7 )) $size ${choice[@]} 3>&1 1>&2 2>&3)
 }
