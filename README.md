@@ -21,4 +21,9 @@ Allows infinite streaming of a video as webcam output for different applications
   * [Webcam Tests](https://webcamtests.com/) can also be used.
 *  Open Zoom or Skype and select a different video source.
 
+## Screenshot
+
+![Screenshot](https://raw.githubusercontent.com/whokilleddb/Fake-Stream/master/Images/Screenshot.png)
+
+
 Cheers!!
